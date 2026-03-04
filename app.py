@@ -65,7 +65,7 @@ if st.button('Predict Price'):
     query = [[company, typename, ram, weight,ips_val,fhd, ts , ppi,ssd,hdd,gup ,cup , os]]
     try:
         prediction=np.exp(pipe.predict(query))
-        st.title(f"The predicted price of this laptop is: {int(prediction[0]*1.6)}")
+        st.title(f"The predicted price of this laptop is: Rs.{int(prediction[0]*1.6)}")
     except Exception as e:
         st.error(f"Prediction failed: {e}")
 
