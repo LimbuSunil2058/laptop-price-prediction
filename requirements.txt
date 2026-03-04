@@ -1,0 +1,7 @@
+source laptop-env/bin/activate
+pip freeze > requirements.txt
+
+scikit-learn
+pandas
+numpy
+streamlit
