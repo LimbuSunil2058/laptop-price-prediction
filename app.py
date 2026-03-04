@@ -3,15 +3,28 @@ import pandas as pd
 import numpy as np
 import pickle
 
-st.title("Laptop Price Predection")
-# Import model
-pipe=pickle.load(open('pipe.pkl','rb'))
-df=pickle.load(open('df.pkl','rb'))
+st.title("Laptop Price Prediction")
 
+# Import model
+@st.cache_resource
+def load_model():
+    with open('pipe.pkl', 'rb') as f:
+        pipe = pickle.load(f)
+    return pipe
+
+@st.cache_resource
+def load_data():
+    with open('df.pkl', 'rb') as f:
+        df = pickle.load(f)
+    return df
+pipe = load_model()
+df = load_data()
+
+# Input Features
 company=st.selectbox('Brand',df['Company'].unique())
 typename=st.selectbox('typename',df['TypeName'].unique())
 ram=st.selectbox('Ram',df['Ram'].sort_values(ascending=True).unique())
-weight=st.number_input('Enter the weight')
+weight = st.number_input('Weight (kg)', min_value=0.5, max_value=5.0, value=1.5)
 ips=st.selectbox('IPS',['YES','NO'])
 touchscreen=st.selectbox('Touchscreen',['YES','NO'])
 fullhd=st.selectbox('Full HD',['YES','NO'])
@@ -50,8 +63,11 @@ if st.button('Predict Price'):
     fhd = 1 if fullhd == 'YES' else 0
 
     query = [[company, typename, ram, weight,ips_val,fhd, ts , ppi,ssd,hdd,gup ,cup , os]]
-    prediction=np.exp(pipe.predict(query))
-    st.title(f"The predicted price of this laptop is: {int(prediction[0]*1.6)}")
+    try:
+        prediction=np.exp(pipe.predict(query))
+        st.title(f"The predicted price of this laptop is: {int(prediction[0]*1.6)}")
+    except Exception as e:
+        st.error(f"Prediction failed: {e}")
 
     
 

@@ -1,15 +1,19 @@
+# Virtual Environment
+laptop-env/
+venv/
+env/
+
+# Python
 __pycache__/
 *.py[cod]
+*$py.class
 *.pyo
 .ipynb_checkpoints/
 
+# OS
 .DS_Store
 Thumbs.db
 
-env/
-venv/
-.env
-
+# Data
 *.csv
 *.xlsx
-
