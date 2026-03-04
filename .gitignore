@@ -1,4 +1,15 @@
-*__pycache__/
+__pycache__/
+*.py[cod]
+*.pyo
 .ipynb_checkpoints/
-*.csv
+
 .DS_Store
+Thumbs.db
+
+env/
+venv/
+.env
+
+*.csv
+*.xlsx
+
